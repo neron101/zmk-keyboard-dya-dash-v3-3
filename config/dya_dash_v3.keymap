@@ -271,7 +271,7 @@
         mac_default_layer {
             display-name = "Mac";
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &kp LALT  &mt LCMD LANG2  &trans  &lt LEFT_L LANG2  &lt RIGHT_L LANG1  &trans  &mt RCMD LANG1  &kp RALT  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &kp EXCL  &kp AT_SIGN  &kp HASH  &kp DOLLAR  &kp PERCENT  &kp LCTRL  &kp AMPERSAND  &kp ASTERISK  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &trans  &trans  &kp LEFT  &kp UP_ARROW  &kp RIGHT  &trans  &kp LANGUAGE_1  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &kp LEFT  &kp DOWN  &kp RIGHT_ARROW  &trans  &kp LANGUAGE_2  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
             >;
         };
 
@@ -313,7 +313,7 @@
         config_layer {
             display-name = "Config";
             bindings = <
-&bootloader  &none  &none  &none  &none  &animtrig ANM_TRG 0  &none  &none  &none  &none  &none  &bootloader  &sys_reset  &none  &none  &none  &none  &animtrig ANM_TRG 1  &none  &none  &none  &none  &none  &sys_reset  &studio_unlock  &none  &none  &none  &none  &animtrig ANM_TRG 2  &none  &none  &none  &none  &none  &none  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &dfprv  &dfnxt  &none  &none  &none  &none  &none  &none  &none  &none  &none  &none  &none  &none
+&bootloader  &none  &none  &none  &none  &animtrig ANM_TRG 0  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4  &bt BT_CLR_ALL  &sys_reset  &none  &none  &none  &none  &animtrig ANM_TRG 1  &none  &none  &none  &none  &none  &bt BT_CLR  &studio_unlock  &none  &none  &none  &none  &animtrig ANM_TRG 2  &none  &none  &none  &none  &none  &none  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &dfprv  &dfnxt  &none  &none  &none  &none  &none  &none  &none  &none  &none  &none  &none  &none
             >;
         };
 
