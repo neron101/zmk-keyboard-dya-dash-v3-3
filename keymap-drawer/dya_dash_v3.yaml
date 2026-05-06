@@ -12,40 +12,40 @@ layers:
   - I
   - O
   - P
-  - '['
+  - '-'
   - LCTRL
   - A
   - S
   - D
   - F
   - G
-  - {t: H, s: BACKSPACE}
-  - {t: J, s: ENTER}
+  - H
+  - J
   - K
   - L
-  - ;
-  - ''''
+  - '?'
+  - '='
   - LSHIFT
   - Z
   - X
   - C
   - V
   - B
-  - B
   - N
   - M
   - ','
-  - .
-  - /
+  - ','
+  - '['
+  - ']'
   - Mac
   - LEFT ALT
   - LEFT WIN
   - {t: SPACE, h: Scroll}
   - '&mkp MB1'
-  - Right
-  - SPACE
+  - {t: ENTER, h: Mac}
+  - BACKSPACE
   - RALT
-  - RWIN
+  - '-'
   - Config
   - {t: '&btprv', h: '&btclr_cur'}
   - {t: '&btnxt', h: '&btclr_cur'}
