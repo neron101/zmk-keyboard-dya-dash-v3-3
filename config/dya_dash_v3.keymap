@@ -5,14 +5,13 @@
 #include <dt-bindings/zmk_driver_animation/animation_control.h>
 #include <dt-bindings/zmk_driver_animation/animation_trigger.h>
 #include <dt-bindings/zmk_behavior_default_layer/default_layer.h>
+#include <behaviors/runtime-input-processor.dtsi>
+#include <behaviors/runtime-sensor-rotate.dtsi>
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/outputs.h>
 #include <dt-bindings/zmk/pointing.h>
-
-#include <behaviors/runtime-input-processor.dtsi>
-#include <behaviors/runtime-sensor-rotate.dtsi>
 
 #define ZMK_POINTING_DEFAULT_SCRL_VAL 100
 
@@ -43,16 +42,13 @@
     temp-layer = <TRACKBALL_L>;
 };
 
-&scroll_runtime_input_processor {
-    active-layers = <BIT(SCROLL_L)>;
-};
+&scroll_runtime_input_processor { active-layers = <BIT(SCROLL_L)>; };
 
-&scroll_runtime_input_processor_l {
-    active-layers = <BIT(SCROLL_L)>;
-};
+&scroll_runtime_input_processor_l { active-layers = <BIT(SCROLL_L)>; };
 
-&trackball_r {cpi = <600>; };
-&trackball_l {cpi = <600>; };
+&trackball_r { cpi = <600>; };
+
+&trackball_l { cpi = <600>; };
 
 / {
     macros {
@@ -60,64 +56,82 @@
             compatible = "zmk,behavior-macro-one-param";
             display-name = "&bt BT_SEL for macro";
             #binding-cells = <1>;
-            bindings = <&macro_param_1to2>, <&bt BT_SEL MACRO_PLACEHOLDER>;
+            bindings = <&macro_param_1to2 &bt BT_SEL MACRO_PLACEHOLDER>;
         };
+
         btclr: bt_clr {
             compatible = "zmk,behavior-macro-one-param";
             display-name = "Unpair given BT profile";
             #binding-cells = <1>;
-            bindings = <&macro_param_1to2>, <&bt BT_SEL MACRO_PLACEHOLDER>, <&bt BT_CLR>;
+            bindings = <&macro_param_1to2 &bt BT_SEL MACRO_PLACEHOLDER &bt BT_CLR>;
         };
+
         // Execute given BT command and disconnect from all once.
         // ZMK automatically reconnects to current profile right after disconnection.
         // It improves connection stability.
         // param is ignored. It's required for hold-tap
+
         btnxt: btnxt {
             compatible = "zmk,behavior-macro-one-param";
             display-name = "Next BT profile with disconnect";
             #binding-cells = <1>;
             wait-ms = <50>;
-            bindings = <&bt BT_NXT>, <&bt BT_DISC 0 &bt BT_DISC 1 &bt BT_DISC 2 &bt BT_DISC 3>;
+            bindings = <&bt BT_NXT &bt BT_DISC 0 &bt BT_DISC 1 &bt BT_DISC 2 &bt BT_DISC 3>;
         };
+
         // param is ignored. It's required for hold-tap
+
         btprv: btprv {
             compatible = "zmk,behavior-macro-one-param";
             display-name = "Previous BT profile with disconnect";
             #binding-cells = <1>;
             wait-ms = <50>;
-            bindings = <&bt BT_PRV>, <&bt BT_DISC 0 &bt BT_DISC 1 &bt BT_DISC 2 &bt BT_DISC 3>;
+            bindings = <&bt BT_PRV &bt BT_DISC 0 &bt BT_DISC 1 &bt BT_DISC 2 &bt BT_DISC 3>;
         };
+
         // param is ignored. It's required for hold-tap
+
         btclr_cur: bt_clr_cur {
             compatible = "zmk,behavior-macro-one-param";
             display-name = "Unpair current BT profile";
             #binding-cells = <1>;
             bindings = <&bt BT_CLR>;
         };
+
         // Change default layer for current profile to next layer
+
         dfnxt: dfnxt {
             compatible = "zmk,behavior-macro";
             display-name = "Change default layer to next";
             #binding-cells = <0>;
             bindings = <&df DF_INC &animtrig ANM_TRG 2>;
         };
+
         dfprv: dfprv {
             compatible = "zmk,behavior-macro";
             display-name = "Change default layer to prev";
             #binding-cells = <0>;
             bindings = <&df DEFAULT_LAYER_CMD_NEXT 3 &animtrig ANM_TRG 2>; // TODO: 3 is number of default layer - 1
         };
+
         ZMK_MACRO(nxt_win,
-            display-name = "Next Window";
-            bindings = <&macro_press &kp LWIN &kp LCTRL>
-                     , <&macro_tap &kp RIGHT_ARROW>
-                     , <&macro_release &kp LCTRL &kp LWIN>;
+
+        display-name = "Next Window";
+        bindings =
+            <&macro_press &kp LWIN &kp LCTRL>,
+            <&macro_tap &kp RIGHT_ARROW>,
+            <&macro_release &kp LCTRL &kp LWIN>;
+
         )
-        ZMK_MACRO(prv_win,
-            display-name = "Previous Window";
-            bindings = <&macro_press &kp LWIN &kp LCTRL>
-                     , <&macro_tap &kp LEFT_ARROW>
-                     , <&macro_release &kp LCTRL &kp LWIN>;
+        ZMK_MACRO(
+
+        prv_win,
+        display-name = "Previous Window";
+        bindings =
+            <&macro_press &kp LWIN &kp LCTRL>,
+            <&macro_tap &kp LEFT_ARROW>,
+            <&macro_release &kp LCTRL &kp LWIN>;
+
         )
     };
 
@@ -133,6 +147,7 @@
         };
 
         // ctrl+j as enter
+
         jenter: j_or_ctrl_enter {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
@@ -160,46 +175,55 @@
         };
 
         // Rotary encoder
+
         rsr_lr: rsr_lr {
-			compatible = "zmk,behavior-runtime-sensor-rotate";
-			#sensor-binding-cells = <0>;
-			tap-ms = <5>;
-			cw-binding = <&kp RIGHT>;
-			ccw-binding = <&kp LEFT>;
-		};
+            compatible = "zmk,behavior-runtime-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            tap-ms = <5>;
+            cw-binding = <&kp RIGHT>;
+            ccw-binding = <&kp LEFT>;
+        };
+
         rsr_ud: rsr_ud {
-			compatible = "zmk,behavior-runtime-sensor-rotate";
-			#sensor-binding-cells = <0>;
-			tap-ms = <5>;
-			cw-binding = <&kp DOWN>;
-			ccw-binding = <&kp UP>;
-		};
+            compatible = "zmk,behavior-runtime-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            tap-ms = <5>;
+            cw-binding = <&kp DOWN>;
+            ccw-binding = <&kp UP>;
+        };
+
         // mouse scroll
+
         rsr_msch: rsr_msch {
-			compatible = "zmk,behavior-runtime-sensor-rotate";
-			#sensor-binding-cells = <0>;
-			tap-ms = <20>;
-			cw-binding = <&msc SCRL_DOWN>;
-			ccw-binding = <&msc SCRL_UP>;
-		};
+            compatible = "zmk,behavior-runtime-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            tap-ms = <20>;
+            cw-binding = <&msc SCRL_DOWN>;
+            ccw-binding = <&msc SCRL_UP>;
+        };
+
         rsr_mscv: rsr_mscv {
-			compatible = "zmk,behavior-runtime-sensor-rotate";
-			#sensor-binding-cells = <0>;
-			tap-ms = <20>;
-			cw-binding = <&msc SCRL_RIGHT>;
-			ccw-binding = <&msc SCRL_LEFT>;
-		};
+            compatible = "zmk,behavior-runtime-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            tap-ms = <20>;
+            cw-binding = <&msc SCRL_RIGHT>;
+            ccw-binding = <&msc SCRL_LEFT>;
+        };
     };
 
     combos {
         compatible = "zmk,combos";
+
         // Toggle output when clicking left setting buttons at the same time
+
         setting_left {
             timeout-ms = <50>;
             key-positions = <46 47>;
             bindings = <&out OUT_TOG>;
         };
+
         // Mute when clicking right setting buttons at the same time
+
         setting_right {
             timeout-ms = <50>;
             key-positions = <48 49>;
@@ -210,30 +234,23 @@
     keymap {
         compatible = "zmk,keymap";
 
-            // bindings = <
-            // &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-            // &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-            // &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-            // &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans
-            //
-            // &trans  &trans                                    &trans  &trans
-            // &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans
-            // &trans  &trans
-            // >;
+        // bindings = <
+        // &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
+        // &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
+        // &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
+        // &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans
+        //
+        // &trans  &trans                                    &trans  &trans
+        // &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans
+        // &trans  &trans
+        // >;
+
         default_layer {
             display-name = "Base";
-
             bindings = <
-            &kp TAB                    &kp Q         &kp W     &kp E     &kp R         &kp T      &kp Y         &kp U              &kp I     &kp O      &kp P     &kp LBKT
-            &kp LCTRL                  &kp A         &kp S     &kp D     &kp F         &kp G      &hbackspace   &jenter            &kp K     &kp L      &kp SEMI  &kp SQT
-            &kp LSHIFT                 &kp Z         &kp X     &kp C     &kp V         &kp B      &kp B         &kp N              &kp M     &kp COMMA  &kp DOT   &kp FSLH
-            &mo CONFIG_L  &kp LWIN  &kp LALT  &kp SPACE &mo LEFT_L                                &mo RIGHT_L   &kp SPACE          &kp RALT  &kp RWIN &mo CONFIG_L
-            &btprv_clr 0 0 &btnxt_clr 0 0                                                         &kp C_VOL_DN &kp C_VOL_UP
-            // TOUCH (s, d, ctrl, c)                                                              (k, l, enter, m)
-            &none &none &none &none                                                               &none &none &mo SCROLL_L &none
-            // encoder module click
-            &mo SCROLL_L &mo SCROLL_L
+&kp TAB  &kp Q  &kp W  &kp E  &kp R  &kp T  &kp Y  &kp U  &kp I  &kp O  &kp P  &kp LBKT  &kp LCTRL  &kp A  &kp S  &kp D  &kp F  &kp G  &hbackspace  &jenter  &kp K  &kp L  &kp SEMI  &kp SQT  &kp LSHIFT  &kp Z  &kp X  &kp C  &kp V  &kp B  &kp B  &kp N  &kp M  &kp COMMA  &kp DOT  &kp FSLH  &mo 2  &kp LEFT_ALT  &kp LEFT_WIN  &lt 10 SPACE  &mkp MB1  &mo RIGHT_L  &kp SPACE  &kp RALT  &kp RWIN  &mo CONFIG_L  &btprv_clr 0 0  &btnxt_clr 0 0  &kp C_VOL_DN  &kp C_VOL_UP  &kp LANGUAGE_2  &none  &kp LANGUAGE_1  &none  &none  &none  &mo SCROLL_L  &none  &mo SCROLL_L  &mo SCROLL_L
             >;
+
             sensor-bindings = <
                 // pinky encoder
                 &rsr_msch
@@ -247,56 +264,28 @@
         windows_default_layer {
             display-name = "Windows";
             bindings = <
-            &trans  &trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans  &trans
-            &trans  &trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans  &trans
-            &trans  &trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans  &trans
-            &trans  &trans  &mt LALT LANG2  &trans  &lt LEFT_L LANG2                    &lt RIGHT_L LANG1  &trans  &mt RALT LANG1  &trans  &trans
-
-            &trans  &trans                                    &trans  &trans
-            &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans
-            &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &mt LALT LANG2  &trans  &lt LEFT_L LANG2  &lt RIGHT_L LANG1  &trans  &mt RALT LANG1  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
             >;
         };
 
         mac_default_layer {
             display-name = "Mac";
             bindings = <
-            &trans  &trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans  &trans
-            &trans  &trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans  &trans
-            &trans  &trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans  &trans
-            &trans  &kp LALT   &mt LCMD LANG2  &trans  &lt LEFT_L LANG2                    &lt RIGHT_L LANG1  &trans  &mt RCMD LANG1  &kp RALT  &trans
-
-            &trans  &trans                                    &trans  &trans
-            &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans
-            &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &kp LALT  &mt LCMD LANG2  &trans  &lt LEFT_L LANG2  &lt RIGHT_L LANG1  &trans  &mt RCMD LANG1  &kp RALT  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
             >;
         };
 
         ios_default_layer {
             display-name = "iOS";
             bindings = <
-            &trans  &trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans  &trans
-            &trans  &trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans  &trans
-            &trans  &trans  &trans  &trans  &trans  &trans                      &trans  &trans  &trans  &trans  &trans  &trans
-            &trans  &kp LALT   &mt LCMD LANG2  &trans  &lt LEFT_L LANG2                    &lt RIGHT_L LANG1  &trans  &mt RCMD LANG1  &kp RALT  &trans
-
-            &trans  &trans                                    &trans  &trans
-            &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans
-            &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &kp LALT  &mt LCMD LANG2  &trans  &lt LEFT_L LANG2  &lt RIGHT_L LANG1  &trans  &mt RCMD LANG1  &kp RALT  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
             >;
         };
 
         linux_default_layer {
             display-name = "Linux";
             bindings = <
-            &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-            &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-            &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-            &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans
-
-            &trans  &trans                                    &trans  &trans
-            &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans
-            &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
             >;
         };
 
@@ -310,82 +299,44 @@
             //           |     |     |          |     |          |                           |     |         |         |     |
 
             bindings = <
-            &kp ESC  &kp EXCL  &kp AT  &kp HASH  &kp DLLR  &kp PRCNT     &kp CARET  &kp AMPS   &kp ASTRK  &kp LPAR  &kp RPAR  &kp RBKT
-            &trans   &kp N1    &kp N2  &kp N3    &kp N4    &kp N5        &kp N6     &kp N7     &kp N8     &kp N9    &kp N0    &kp BACKSLASH
-            &trans   &trans    &trans  &trans    &trans    &trans        &kp GRAVE  &kp MINUS  &kp EQUAL  &kp LBKT  &kp RBKT  &kp RSHIFT
-            &trans  &trans  &trans  &trans  &trans                    &mo CONFIG_L  &trans  &trans  &trans  &trans
-
-            &trans  &trans                                    &trans  &trans
-            &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans
-            &trans  &trans
+&kp ESC  &kp EXCL  &kp AT  &kp HASH  &kp DLLR  &kp PRCNT  &kp CARET  &kp AMPS  &kp ASTRK  &kp LPAR  &kp RPAR  &kp RBKT  &trans  &kp N1  &kp N2  &kp N3  &kp N4  &kp N5  &kp N6  &kp N7  &kp N8  &kp N9  &kp N0  &kp BACKSLASH  &trans  &trans  &trans  &trans  &trans  &trans  &kp GRAVE  &kp MINUS  &kp EQUAL  &kp LBKT  &kp RBKT  &kp RSHIFT  &trans  &trans  &trans  &trans  &trans  &mo CONFIG_L  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
             >;
         };
 
         right_layer {
             display-name = "Right";
             bindings = <
-            &trans  &trans  &trans  &trans  &trans  &trans      &trans      &kp PG_UP     &kp UP        &kp PG_DN  &trans  &kp C_AL_LOCK
-            &trans  &trans  &trans  &trans  &trans  &trans      &trans      &kp LEFT      &kp DOWN      &kp RIGHT  &trans  &trans
-            &trans  &trans  &trans  &trans  &trans  &trans      &kp C_MUTE  &kp C_VOL_DN  &kp C_VOL_UP  &trans     &trans  &trans
-            &trans  &trans  &trans  &trans  &mo CONFIG_L                    &trans  &trans  &trans  &trans  &trans
-
-            &trans  &trans                                    &trans  &trans
-            &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans
-            &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &kp PG_UP  &kp UP  &kp PG_DN  &trans  &kp C_AL_LOCK  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &kp LEFT  &kp DOWN  &kp RIGHT  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &kp C_MUTE  &kp C_VOL_DN  &kp C_VOL_UP  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &mo CONFIG_L  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
             >;
         };
 
         config_layer {
             display-name = "Config";
             bindings = <
-            &bootloader     &none       &none           &none  &none  &animtrig ANM_TRG 0 &none   &none   &none  &none  &none  &bootloader
-            &sys_reset      &none       &none           &none  &none  &animtrig ANM_TRG 1 &none  &none    &none  &none  &none  &sys_reset
-            &studio_unlock  &none       &none           &none  &none  &animtrig ANM_TRG 2 &none  &none    &none  &none  &none  &none
-            &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans
-
-            &dfprv &dfnxt                    &none  &none
-            &none  &none  &none  &none                    &none  &none  &none  &none
-            &none  &none
+&bootloader  &none  &none  &none  &none  &animtrig ANM_TRG 0  &none  &none  &none  &none  &none  &bootloader  &sys_reset  &none  &none  &none  &none  &animtrig ANM_TRG 1  &none  &none  &none  &none  &none  &sys_reset  &studio_unlock  &none  &none  &none  &none  &animtrig ANM_TRG 2  &none  &none  &none  &none  &none  &none  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &dfprv  &dfnxt  &none  &none  &none  &none  &none  &none  &none  &none  &none  &none  &none  &none
             >;
         };
 
         trackball_layer {
             display-name = "Automouse";
             bindings = <
-            &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-            &trans  &trans  &trans  &trans  &trans  &trans    &trans  &mkp LCLK         &mkp RCLK  &mkp RCLK  &mo SCROLL_L  &kp RALT
-            &trans  &trans  &trans  &trans  &trans  &trans    &trans  &mkp MCLK         &mkp LCLK  &mkp MB4  &mkp MB5  &trans
-            &trans  &trans  &trans  &trans  &mo SCROLL_L                    &trans  &trans  &trans  &trans  &trans
-            &trans  &trans                                    &trans  &trans
-            &rip_hdpi  &rip_ldpi  &trans  &trans                  &mo SCROLL_L  &trans  &mo SCROLL_L  &trans
-            &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &mkp LCLK  &mkp RCLK  &mkp RCLK  &mo SCROLL_L  &kp RALT  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &mkp MCLK  &mkp LCLK  &mkp MB4  &mkp MB5  &trans  &trans  &trans  &trans  &trans  &mo SCROLL_L  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &rip_hdpi  &rip_ldpi  &trans  &trans  &mo SCROLL_L  &trans  &mo SCROLL_L  &trans  &trans  &trans
             >;
         };
 
         trackball_layer2 {
             display-name = "Mouse";
             bindings = <
-            &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-            &trans  &trans  &trans  &trans  &trans  &trans    &trans  &mkp LCLK         &mkp RCLK  &mkp RCLK  &mo SCROLL_L  &kp RALT
-            &trans  &trans  &trans  &trans  &trans  &trans    &trans  &mkp MCLK         &mkp LCLK  &mkp MB4  &mkp MB5  &trans
-            &trans  &trans  &trans  &trans  &mo SCROLL_L                    &trans  &trans  &trans  &trans  &trans
-            &trans  &trans                                    &trans  &trans
-            &rip_hdpi  &rip_ldpi  &trans  &trans                  &mo SCROLL_L  &trans  &mo SCROLL_L  &trans
-            &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &mkp LCLK  &mkp RCLK  &mkp RCLK  &mo SCROLL_L  &kp RALT  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &mkp MCLK  &mkp LCLK  &mkp MB4  &mkp MB5  &trans  &trans  &trans  &trans  &trans  &mo SCROLL_L  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &rip_hdpi  &rip_ldpi  &trans  &trans  &mo SCROLL_L  &trans  &mo SCROLL_L  &trans  &trans  &trans
             >;
         };
 
         scroll_layer {
             display-name = "Scroll";
             bindings = <
-            &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-            &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-            &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-            &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans
-            &trans  &trans                                    &trans  &trans
-            &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans
-            &trans  &trans
+&trans  &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp NUMBER_4  &kp N5  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &kp LEFT_ARROW  &kp UP_ARROW  &kp RIGHT_ARROW  &trans  &kp LANGUAGE_1  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &kp LEFT  &kp DOWN_ARROW  &kp RIGHT  &trans  &kp LANGUAGE_2  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
             >;
+
             sensor-bindings = <
             // pinky encoder
                 &rsr_mscv
@@ -395,43 +346,26 @@
                 &rsr_lr
             >;
         };
+
         extra1 {
             display-name = "Ext1";
             bindings = <
-            &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-            &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-            &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-            &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans
-            &trans  &trans                                    &trans  &trans
-            &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans
-            &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
             >;
         };
 
         extra2 {
             display-name = "Ext2";
             bindings = <
-            &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-            &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-            &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-            &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans
-            &trans  &trans                                    &trans  &trans
-            &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans
-            &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
             >;
         };
 
         extra3 {
             display-name = "Ext3";
             bindings = <
-            &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-            &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-            &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-            &trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans  &trans  &trans
-            &trans  &trans                                    &trans  &trans
-            &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans
-            &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
             >;
         };
-     };
+    };
 };
