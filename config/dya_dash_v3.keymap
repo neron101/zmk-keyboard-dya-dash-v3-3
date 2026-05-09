@@ -248,7 +248,7 @@
         default_layer {
             display-name = "Base";
             bindings = <
-&kp TAB  &kp Q  &kp W  &kp E  &kp R  &kp T  &kp Y  &kp U  &kp I  &kp O  &kp P  &kp MINUS  &kp LCTRL  &kp A  &kp S  &kp D  &kp F  &kp G  &kp H  &kp J  &kp K  &kp L  &kp QUESTION  &kp EQUAL  &kp LSHIFT  &kp Z  &kp X  &kp C  &kp V  &kp B  &kp N  &kp M  &kp COMMA  &kp COMMA  &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &mo 2  &kp LEFT_ALT  &kp LEFT_WIN  &lt 10 SPACE  &mkp MB1  &lt 2 ENTER  &kp BACKSPACE  &kp RALT  &kp MINUS  &mo CONFIG_L  &btprv_clr 0 0  &btnxt_clr 0 0  &kp C_VOL_DN  &kp C_VOL_UP  &kp LANGUAGE_2  &none  &kp LANGUAGE_1  &none  &mkp MB2  &mkp MB1  &trans  &none  &mo SCROLL_L  &mo SCROLL_L
+&kp TAB  &kp Q  &kp W  &kp E  &kp R  &kp T  &kp Y  &kp U  &kp I  &kp O  &kp P  &kp MINUS  &kp LCTRL  &kp A  &kp S  &kp D  &kp F  &kp G  &kp H  &kp J  &kp K  &kp L  &kp QUESTION  &kp EQUAL  &kp LSHIFT  &kp Z  &kp X  &kp C  &kp V  &kp B  &kp N  &kp M  &kp COMMA  &kp COMMA  &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &mo 2  &kp LEFT_ALT  &kp LEFT_WIN  &lt 10 SPACE  &mkp MB1  &lt 2 ENTER  &kp BACKSPACE  &kp RALT  &kp MINUS  &mo CONFIG_L  &btprv_clr 0 0  &btnxt_clr 0 0  &kp C_VOL_DN  &kp C_VOL_UP  &kp LANGUAGE_2  &none  &kp LANGUAGE_1  &none  &trans  &mkp MB1  &trans  &mkp MB2  &mo SCROLL_L  &mo SCROLL_L
             >;
 
             sensor-bindings = <
