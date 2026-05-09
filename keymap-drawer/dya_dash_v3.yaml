@@ -55,9 +55,9 @@ layers:
   - ''
   - LANGUAGE 1
   - ''
-  - ''
-  - ''
-  - Scroll
+  - '&mkp MB2'
+  - '&mkp MB1'
+  - {t: ▽, type: trans}
   - ''
   - Scroll
   - Scroll

@@ -365,15 +365,20 @@ path.combo {
 </g>
 <g transform="translate(658, 119)" class="key keypos-54">
 <rect rx="6" ry="6" x="-12" y="-5" width="24" height="10" class="key"/>
+<text x="0" y="0" class="key tap">
+<tspan x="0" dy="-0.6em">&amp;mkp</tspan><tspan x="0" dy="1.2em">MB2</tspan>
+</text>
 </g>
 <g transform="translate(714, 133)" class="key keypos-55">
 <rect rx="6" ry="6" x="-12" y="-5" width="24" height="10" class="key"/>
+<text x="0" y="0" class="key tap">
+<tspan x="0" dy="-0.6em">&amp;mkp</tspan><tspan x="0" dy="1.2em">MB1</tspan>
+</text>
 </g>
-<g transform="translate(812, 132)" class="key keypos-56">
-<rect rx="6" ry="6" x="-26" y="-6" width="52" height="13" class="key"/>
-<a href="#Scroll">
-<text x="0" y="0" class="key tap layer-activator">Scroll</text>
-</a></g>
+<g transform="translate(812, 132)" class="key trans keypos-56">
+<rect rx="6" ry="6" x="-26" y="-6" width="52" height="13" class="key trans"/>
+<text x="0" y="0" class="key trans tap">▽</text>
+</g>
 <g transform="translate(616, 160)" class="key keypos-57">
 <rect rx="6" ry="6" x="-26" y="-6" width="52" height="13" class="key"/>
 </g>
