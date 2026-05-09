@@ -55,10 +55,10 @@ layers:
   - ''
   - LANGUAGE 1
   - ''
-  - '&mkp MB2'
+  - {t: ▽, type: trans}
   - '&mkp MB1'
   - {t: ▽, type: trans}
-  - ''
+  - '&mkp MB2'
   - Scroll
   - Scroll
   Windows:
